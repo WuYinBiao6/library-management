@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <link rel="stylesheet" href="static/css/index.css" />
+    <link rel="stylesheet" href="static/css/picture.css" />
+    <title>欢迎来到图书馆管理系统</title>
+</head>
+
+<body>
+    <div class="header bg-main">
+        <div class="logo margin-big-left fadein-top">
+            <h1><img src="../static/image/y.jpg" class="radius-circle rotate-hover" height="50" alt="图书管理系统"></h1>
+        </div>
+        <div class="head-l"><a class="button button-little bg-green" target="_blank">
+            <button class="icon-home">退出登入<span class="showAccount"></span></button></a> &nbsp;&nbsp;<a class="button button-little bg-blue"></a>
+    </div>
+    <div class="leftnav">
+        <h2 class="on"><span class="icon-pencil-square-o"></span>书籍管理</h2>
+        <div>
+            <ul style="display: block;">
+                <li>
+                    <!--          实现页面跳转  主页-->
+                    <button target="right" class="" id="Backstage" onclick="window.location.href='http://127.0.0.1:8080/Backstage'">
+                        <span class="icon-caret-right"></span>主页</button>
+                </li>
+                <li>
+                    <!--          实现页面跳转  修改书籍信息-->
+                    <button target="right" class="" id="bookSet" onclick="window.location.href='http://127.0.0.1:8080/bookSet'">
+                        <span class="icon-caret-right"></span>书籍修改</button>
+
+                </li>
+                <li>
+                    <!--          实现页面跳转  添加书籍-->
+                    <button target="right" class="" id="addBook" onclick="window.location.href='http://127.0.0.1:8080/addBooks'">
+                        <span class="icon-caret-right"></span>添加书籍</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+        <div class="panel admin-panel" style=" position: absolute;top: 111px;right: 40px;">
+            <div class="panel-head"><strong class="icon-reorder"> 交易列表</strong> <a href=""
+                    style="float:right; display:none;">添加字段</a></div>
+            <div class="padding border-bottom">
+                <ul class="search" style="padding-left:10px;">
+                    <li>搜索：</li>
+                    <li>
+                        <!--    通过bookid id 获取val() -->
+                        <input type="text" placeholder="请输入书籍id" id="bookid" class="input" style="width:150px; line-height:17px;display:inline-block">
+                        <!--   通过onclick点击事件 触发函数queryBook()            -->
+                        <a href="javascript:void(0)" class="button border-main icon-search" id="btn_queryGoodsInfo" onclick="queryBook()">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <volist name="list" id="vo">
+            </volist>
+            <table class="table table-hover text-center">
+                <tbody>
+                    <tr>
+                        <th width="100" style="text-align:left; padding-left:20px;">书籍ID</th>
+                        <th width="10%">书籍名称</th>
+                        <th>书籍入馆时间</th>
+                        <th style="position: absolute;left: 720px; ">操作</th>
+                    </tr>
+                    <div id="datad">
+
+                    </div>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
+                                    href="">3</a><a href="">下一页</a><a href="">尾页</a> </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+    showdata()
+    //动态展示
+    function showdata(){
+        $.ajax({  //通过ajax触发post请求
+            method:"post",
+            url:"http://localhost:8080/wyb/showdata",  //post请求路径
+            success:function (data){
+                console.log("数据",data);
+                let cc=[];   // 定义一个cc数组   展示动态页面效果
+                for (let i of data.data){   //定义一个for循环 分别存入三条书籍信息
+                    yy=`
+                      <tr>
+                        <td style="text-align:left; padding-left:20px;position: relative;left: 10px">
+                               ${i.Bookid}
+                           </td>
+                           <td style="width:50px; text-align:center; padding:7px 0 ;position: relative;left:-151px;">
+                               ${i.BookName}
+                           </td>
+                           <td width="10%" style="position: relative;left: -65px">${i.CreatTime}</td>
+                           <td style="position: relative;left: 250px">
+<!--                           跳转到修改页面-->
+                               <button style="color: aquamarine;" onclick="window.location.href='http://127.0.0.1:8080/bookSet'">修改</button>
+                               <button style="color:brown" onclick="delect(this)">删除</button>
+                           </td>
+                           </tr>
+                    `
+                    cc.push(yy)  //将tr的所有数据存放在cc数组当中
+
+                }
+                console.log(cc)
+                var c =""
+               for (let i in cc){
+                   c += cc[i];
+               }
+                 $("#datad").append(c)  //将c投放到 id为datad中的div下
+            }
+        })
+    }
+    //查询
+    function queryBook(){
+        var id=$("#bookid").val()  //通过书籍id查询
+        console.log(id)
+       $.ajax({
+           method:"post",//post请求
+           url:"http://localhost:8080/wyb/query", //post请求路径
+           data: {id:id},
+           success:function (data){
+               console.log("数据",data);
+               let dd = [];
+               for (let i of data.data){
+                   yy= `
+                    <tr>
+                        <td style="text-align:left; padding-left:20px;position: relative;left: 10px">
+                               ${i.Bookid}
+                           </td>
+                           <td style="width:50px; text-align:center; padding:7px 0 ;position: relative;left:-151px;">
+                               ${i.BookName}
+                           </td>
+                           <td width="10%" style="position: relative;left: -65px">${i.CreatTime}</td>
+                           <td style="position: relative;left: 250px">
+                               <button style="color: aquamarine;" onclick="window.location.href='http://127.0.0.1:8080/bookSet'">修改</button>
+                               <button style="color:brown" onclick="delect(this)">删除</button>
+                           </td>
+                           </tr>
+                   `
+                   dd.push(yy)
+               }
+               console.log(dd)
+               var c =""
+               for (let i = 0; i <dd.length ; i++) {
+                   c+=dd[i]
+               }
+              document.getElementById("datad").innerHTML=c  //将c所获得的值 通过id 展示在页面
+           }
+       })
+    }
+    //删除
+    function  delect(e){
+        var id=e.parentElement.parentElement.children[0].innerText  //通过id删除一行数据
+        console.log(id)
+        $.ajax({  //通过ajax发出post请求
+            method: "post",
+            url: "http://localhost:8080/wyb/delect",//post请求地址
+            data:{id:id},  //对应id的值
+            success:function (data){
+                if (data.data==1){
+                    alert("ok")
+                }
+            },
+            err:function (data){
+                console.log(data)
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

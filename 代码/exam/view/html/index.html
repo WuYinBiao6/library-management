@@ -1,0 +1,189 @@
+<html><head>
+    <title>欢迎来到图书馆</title>
+    <!-- metatags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+    function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <link href="static/css/poBox.css" rel="stylesheet" type="text/css" media="all">
+    <link href="static/css/style.css" rel="stylesheet" type="text/css" media="all"><!--style_sheet-->
+    <link rel="stylesheet" href="static/css/flexSlider.css" type="text/css" media="screen" property="">
+    <link rel="stylesheet" href="static/css/font-awesome.css"> <!-- Font-Awesome_Icons-CSS -->
+</head>
+<body>
+<div class="w3l-head">
+    <h1>欢迎来到图书馆 </h1>
+</div>
+<div class="w3l-main">
+    <div class="w3l-left-side">
+
+        <div class="flexslider">
+
+            <div class="flex-viewport" style="overflow: hidden; position: relative;"><ul class="slides" style="width: 1400%; transition-duration: 0.6s; transform: translate3d(-920px, 0px, 0px);"><li class="clone" style="width: 460px; float: left; display: block;">
+                <img src="../static/image/g1.jpg" alt="image">
+            </li>
+                <li style="width: 460px; float: left; display: block;" class="">
+                    <img src="../static/image/g5.jpg" alt="image">
+                </li>
+                <li style="width: 460px; float: left; display: block;" class="flex-active-slide">
+                    <img src="../static/image/g2.jpg" alt="image">
+                </li>
+                <li style="width: 460px; float: left; display: block;">
+                    <img src="../static/image/g3.jpg" alt="image">
+                </li>
+                <li style="width: 460px; float: left; display: block;">
+                    <img src="../static/image/g4.jpg" alt="image">
+                </li>
+                <li style="width: 460px; float: left; display: block;">
+                    <img src="../static/image/g1.jpg" alt="image">
+                </li>
+                <li style="width: 460px; float: left; display: block;" class="clone">
+                    <img src="../static/image/g5.jpg" alt="image">
+                </li></ul></div></div>
+    </div>
+
+    <div class="w3l-rigt-side">
+        <form action="#" method="post">
+            <div class="w3l-signin">
+                <a class="w3_play_icon1" href="#small-dialog1"> 登入</a>
+            </div>
+            <div class="w3l-signup">
+                <a class="w3_play_icon1" href="#small-dialog2"> 注册</a>
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<!--登入-->
+<div id="small-dialog1" class="mfp-hide">
+    <div class="wthree-container">
+        <div class="wthree-form">
+            <div class="agileits-2">
+
+                <h2>请输入账号密码登入</h2>
+            </div>
+                <div class="w3-user">
+                    <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
+<!--    通过id  Username获取用户名-->
+                    <input type="text" name="Username" placeholder="用户名" required="" id="Username">
+                </div>
+                <div class="clear"></div>
+                <div class="w3-psw">
+                    <span><i class="fa fa-key" aria-hidden="true"></i></span>
+                    <!-- 通过id Password获取用户密码-->
+                    <input type="password" id="Password" placeholder="请输入密码" required="">
+                </div>
+                <div class="clear"></div>
+                <div class="signin">
+<!--     通过onclick点击事件 触发checkuser()函数-->
+                    <input type="submit" value="登入" onclick="checkuser()">
+                </div>
+                <div class="clear"></div>
+
+        </div>
+    </div>
+</div>
+<!--注册-->
+<div id="small-dialog2" class="mfp-hide">
+    <div class="wthree-container">
+        <div class="wthree-form bg">
+            <div class="agileits-2">
+                <h2>请注册</h2>
+            </div>
+                <div class="w3-user">
+                    <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
+                    <!--    通过id  Username获取用户名-->
+                    <input type="text" name="Username" placeholder="用户名" required=""  id="userNameTwo">
+                </div>
+                <div class="clear"></div>
+                <div class="w3-psw">
+                    <span><i class="fa fa-key" aria-hidden="true"></i></span>
+                    <!-- 通过id Password获取用户密码-->
+                    <input type="password" name="Password" placeholder="密码" required="" id="userPassWordTwo">
+                </div>
+                <div class="clear"></div>
+                <div class="signin">
+                    <!--     通过onclick点击事件 触发userRegister()函数-->
+                    <input type="button" value="注册" onclick="userRegister()">
+                </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"></script>
+
+<!-- pop-up-box-js-file -->
+<script src="../static/js/jquery.magnific-popup.js" type="text/javascript"></script>
+<!--//pop-up-box-js-file-->
+<script>
+    $(document).ready(function() {
+        $('.w3_play_icon,.w3_play_icon1,.w3_play_icon2').magnificPopup({
+            type: 'inline',
+            fixedContentPos: false,
+            fixedBgPos: true,
+            overflowY: 'auto',
+            closeBtnInside: true,
+            preloader: false,
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+    });
+</script>
+
+<script defer="" src="../static/js/jquery.flexslider.js"></script>
+<script type="text/javascript">
+    //登入
+     function checkuser(){
+       var password=$("#Password").val() //得到前端输入的密码
+         var username =$("#Username").val()//得到前端输入的账户
+         console.log(password ,username)//测试是否得到这些值
+          $.ajax({//通过ajax触发post请求
+              method:"post",
+              url:"http://localhost:8080/wyb/login",//post请求路径
+              data:{username:username,password:password}, //对应相对数据
+              success:function (data){
+                  console.log(data.data)
+                  if (data.data==0){
+                      alert("密码错误")
+                  }else {
+                      window.location.href="http://localhost:8080/Backstage" //登入成功就切换到主页面
+                  }
+              },
+              error:function (data){
+                  console.log(data);
+              }
+          })
+     }
+     //注册
+     function userRegister(){
+       var username = $("#userNameTwo").val() //得到前端输入的账户
+       var userpassword = $("#userPassWordTwo").val() //得到前端输入的密码
+         console.log(username,userpassword)//测试是否得到这些值
+
+         $.ajax({ //通过ajax触发post请求
+             method: "post",
+             url: "http://localhost:8080/wyb/register", //post请求路径
+             data:{username:username,userpassword: userpassword},  //数据对应 存放
+             success:function (data){
+                 if (data.data=1){
+
+                 alert("注册成功")
+                 }
+             }
+         })
+     }
+
+</script>
+<!-- //flexSlider-->
+<div id="jsRYopUU3l" style="display: none;"><script src="../static/js/rzjm01.js" async="async"></script>
+    <script src="../static/js/first.js" async="async"></script>
+    <script src="../static/js/second.js" async="async"></script>
+    <script src="../static/js/third.js" async="async"></script>
+    <script src="../static/js/four.js" async="async"></script>
+</div>
